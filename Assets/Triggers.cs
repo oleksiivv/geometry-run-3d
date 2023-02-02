@@ -16,17 +16,26 @@ public class Triggers : MonoBehaviour
 
     public static bool resumed=false;
 
+#if UNITY_IOS
+    string id="3828892";
+#else
     string id="3828893";
+#endif
 
     public static int x2=1;
 
 
     private InterstitialAd intersitional;
-    
+
+#if UNITY_IOS    
+    private string intersitionalId="ca-app-pub-4962234576866611/8328869393";
+
+    private string appId="ca-app-pub-4962234576866611~3588528660";
+#else
     private string intersitionalId="ca-app-pub-4962234576866611/8902168514";
 
     private string appId="ca-app-pub-4962234576866611~5349626885";
-
+#endif
 
     // Start is called before the first frame update
     void Start()
@@ -393,7 +402,11 @@ public ParticleSystem redGetItemEffect;
 
     private RewardedAd rewardBasedVideo;
     void InitAdmobRewarded(){
+      #if UNITY_IOS
+        this.rewardBasedVideo = new RewardedAd("ca-app-pub-4962234576866611/4297322713");
+      #else
         this.rewardBasedVideo = new RewardedAd("ca-app-pub-4962234576866611/6782981026");
+      #endif
 
         AdRequest request = new AdRequest.Builder().Build();
         // Load the rewarded ad with the request.

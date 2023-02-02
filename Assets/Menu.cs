@@ -11,7 +11,11 @@ public class Menu : MonoBehaviour
 
     public static string hi="hi0";
 
+#if UNITY_IOS
+    string id="3828892";
+#else
     string id="3828893";
+#endif
 
     public StudyController studyController;
 
