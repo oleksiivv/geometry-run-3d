@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Advertisements;
 
-public class Menu : MonoBehaviour
+[RequireComponent(typeof(InterstitialVideo))]
+public class Menu : RewardedVideo
 {
     public Text hiText,money;
     public GameObject loadingPanel,startQuestion;
@@ -19,6 +20,7 @@ public class Menu : MonoBehaviour
 
     public StudyController studyController;
 
+    public InterstitialVideo interst;
 
     void Awake(){
       if(PlayerPrefs.GetInt("studied")==0){
@@ -53,6 +55,11 @@ public class Menu : MonoBehaviour
       }
 
       remindCnt++;
+
+      interst = GetComponent<InterstitialVideo>();
+      interst.LoadAd();
+
+      LoadAd();
 
     }
 
@@ -189,19 +196,19 @@ public class Menu : MonoBehaviour
     }}
 
     public void watchAdd(){
-      ShowOptions options = new ShowOptions();
-      options.resultCallback = AdCallbackHandler;
-      if(Advertisement.IsReady()){
-        Advertisement.Show("Android_Rewarded",options);
-      }
+      //ShowOptions options = new ShowOptions();
+      //options.resultCallback = AdCallbackHandler;
+      //if(Advertisement.IsReady()){
+      //  Advertisement.Show("Android_Rewarded",options);
+      //}
+
+      ShowAd();
     }
 
-
-
-
-
-
-
+    public override void Success(){
+        PlayerPrefs.SetInt("money",PlayerPrefs.GetInt("money")+20);
+        gameObject.GetComponent<AudioSource>().Play();
+    }
 
     void AdCallbackHandler(ShowResult res)
     {
