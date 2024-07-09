@@ -21,7 +21,8 @@ public class MovePlayer : MonoBehaviour
     public GameObject runParticle,bg;
 
     public ParticleSystem fallParticle;
-    // Start is called before the first frame update
+
+    public QuestsController quests;
 
     public bool iceland=false;
     void Start()
@@ -41,20 +42,11 @@ public class MovePlayer : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-
-
-
         score.GetComponent<Text>().text="Score: "+cnt.ToString();
         hi.GetComponent<Text>().text="HI: "+PlayerPrefs.GetInt(recordName).ToString();
         if(Input.GetMouseButtonDown(0) && Time.timeScale==1){
           screenPosition= new Vector2(Input.mousePosition.x, Input.mousePosition.y);
         }
-
-
-
-
-
-
 
         if(Input.GetKeyUp(KeyCode.LeftArrow)){
           if(dx>-1 || iceland){
@@ -113,7 +105,13 @@ public class MovePlayer : MonoBehaviour
 
     IEnumerator cntIncrement(){
       while(true){
-        if(Time.timeScale==1 && bg.activeSelf!=true)cnt+=Triggers.x2;
+        if(Time.timeScale==1 && bg.activeSelf!=true){
+          cnt+=Triggers.x2;
+
+          if(cnt>=1000){
+            quests.CompleteQuest(quests.mapName+"_1000");
+          }
+        }
         yield return new WaitForSeconds(0.12f);
       }
     }
@@ -126,99 +124,79 @@ public class MovePlayer : MonoBehaviour
 
     }
 
+    private int jumpsInSingleRun=0;
+
     public void move(){
         endTouchPosition=new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-        Debug.Log(screenPosition.y-endTouchPosition.y);
+        //Debug.Log(screenPosition.y-endTouchPosition.y);
 
-        if(screenPosition.y+30<endTouchPosition.y && Mathf.Abs(screenPosition.x-endTouchPosition.x)<100 &&jump){
-          GetComponent<Rigidbody>().AddForce(Vector3.up*350);
-          jump=false;
-          Debug.Log("upppppp");
-          runParticle.SetActive(false);
-          // Invoke("fallParticleStart",1.4f);
-          // Invoke("restartRunParticle",1.8f);
+        if(Mathf.Abs(screenPosition.x-endTouchPosition.x)<50 || Mathf.Abs(screenPosition.y-endTouchPosition.y) > 200) {
+            Debug.Log("UP or DOWN");
+            Debug.Log(screenPosition.x-endTouchPosition.x);
+            if(screenPosition.y+30<endTouchPosition.y &&  jump){
+                GetComponent<Rigidbody>().AddForce(Vector3.up*350);
+                jump=false;
+                //Debug.Log("upppppp");
+                runParticle.SetActive(false);
+
+                //QUESTS ONLY
+                jumpsInSingleRun++;
+                Debug.Log(jumpsInSingleRun.ToString()+" jumps");
+                if(jumpsInSingleRun==10){
+                  quests.CompleteQuest("jump_master");
+                }
+
+                if(jumpsInSingleRun==30){
+                  quests.CompleteQuest("jump_pro");
+                }
+            }
+            else if(screenPosition.y-40>endTouchPosition.y && Mathf.Abs(screenPosition.x-endTouchPosition.x)<100){
+                if(GetComponent<Animator>().GetBool("down")==false){
+                  if(transform.position.y>2f)GetComponent<Rigidbody>().AddForce(-Vector3.up*150);
+                  
+                  if(transform.position.y<=0.5f && Application.loadedLevel!=12){
+                    GetComponent<Animator>().SetBool("left",false);
+                    GetComponent<Animator>().SetBool("right",false);
+                    GetComponent<Animator>().SetBool("down",true);
+                    Invoke("cleanAnimDown",1.6f);
+                  }
+                }
+            }
         }
+        else {
+          Debug.Log("LEFT or RIGHT");
+          if(screenPosition.x+10<endTouchPosition.x){
+            if(dx<1 ||iceland){
+              dx++;
+              played=false;
+              if(!played){
+                if(GetComponent<Animator>().GetBool("down")!=true){
+                  GetComponent<Animator>().SetBool("down",false);
+                  GetComponent<Animator>().SetBool("left",false);
+                  GetComponent<Animator>().SetBool("right",true);
+                  played=true;
+                  Invoke("cleanAnim",0.2f);
+                }
+              }
+            }
+          }
+          else if(screenPosition.x-10>endTouchPosition.x){
+            if(dx>-1 || iceland){
+              dx--;
+              played=false;
 
-        else if(screenPosition.y-40>endTouchPosition.y && Mathf.Abs(screenPosition.x-endTouchPosition.x)<100){
-          //GetComponent<Animator>().SetBool("down",false);
-          if(GetComponent<Animator>().GetBool("down")==false){
-          //transform.localScale=new Vector3(0.6f,0.6f,0.6f);
-          //transform.position=Vector3.MoveTowards(transform.position,new Vector3(transform.position.x,0.5f,transform.position.z),0.1f);
-          
-          
-          if(transform.position.y>2f)GetComponent<Rigidbody>().AddForce(-Vector3.up*150);
-          if(transform.position.y<=0.5f && Application.loadedLevel!=12){
-            GetComponent<Animator>().SetBool("left",false);
-            GetComponent<Animator>().SetBool("right",false);
-            GetComponent<Animator>().SetBool("down",true);
-            Invoke("cleanAnimDown",1.6f);
+              if(!played){
+                if(GetComponent<Animator>().GetBool("down")!=true){
+                  GetComponent<Animator>().SetBool("down",false);
+                  GetComponent<Animator>().SetBool("right",false);
+                  GetComponent<Animator>().SetBool("left",true);
+                  played=true;
+                  Invoke("cleanAnim",0.2f);
+                }
+              }
+            }
           }
         }
-
-
-
-
-
-
-
-
-
-        }
-        else{
-
-        if(screenPosition.x+10<endTouchPosition.x){
-          if(dx<1 ||iceland){
-
-
-
-
-            dx++;
-            played=false;
-            
-
-            if(!played){
-              if(GetComponent<Animator>().GetBool("down")!=true){
-                //transform.position=new Vector3(transform.position.x,0.45f,transform.position.z);
-
-              GetComponent<Animator>().SetBool("down",false);
-              //transform.localScale=new Vector3(0.6f,0.6f,0.6f);
-              GetComponent<Animator>().SetBool("left",false);
-              GetComponent<Animator>().SetBool("right",true);
-              played=true;
-              Invoke("cleanAnim",0.2f);
-            }
-            }
-
-          }
-        }
-        else if(screenPosition.x-10>endTouchPosition.x){
-          if(dx>-1 || iceland){
-
-
-            dx--;
-            played=false;
-
-            if(!played){
-              if(GetComponent<Animator>().GetBool("down")!=true){
-                //transform.position=new Vector3(transform.position.x,0.45f,transform.position.z);
-
-              GetComponent<Animator>().SetBool("down",false);
-              //transform.localScale=new Vector3(0.6f,0.6f,0.6f);
-              GetComponent<Animator>().SetBool("right",false);
-              GetComponent<Animator>().SetBool("left",true);
-              played=true;
-              Invoke("cleanAnim",0.2f);
-            }
-            }
-
-
-          }
-        }
-
-      }
-
-
-
     }
 
     void restartRunParticle(){

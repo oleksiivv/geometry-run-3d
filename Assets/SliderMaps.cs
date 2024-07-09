@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Purchasing;
+//using UnityEngine.Purchasing;
 
 public class SliderMaps : MonoBehaviour
 {
@@ -242,20 +242,20 @@ public class SliderMaps : MonoBehaviour
 
 
 
-    public void OnPurchaseComplete(Product product){
-      switch(product.definition.id){
-        case "space_level":
-        {
-          Invoke(nameof(buySpace),0.2f);
-          break;
-        }
-        case "iclands_level":
-        {
-          Invoke(nameof(buyIclands),0.2f);
-          break;
-        }
-      }
-    }
+    // public void OnPurchaseComplete(Product product){
+    //   switch(product.definition.id){
+    //     case "space_level":
+    //     {
+    //       Invoke(nameof(buySpace),0.2f);
+    //       break;
+    //     }
+    //     case "iclands_level":
+    //     {
+    //       Invoke(nameof(buyIclands),0.2f);
+    //       break;
+    //     }
+    //   }
+    // }
 
 
 

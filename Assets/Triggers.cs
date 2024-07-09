@@ -44,6 +44,9 @@ public class Triggers : RewardedVideo
     private string rewardedId="ca-app-pub-4962234576866611/6782981026";
 #endif
 
+    public QuestsController quests;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -77,7 +80,15 @@ public class Triggers : RewardedVideo
 
       MovePlayer.cnt=score;
 
-      if(resumed)resumed=false;
+      if(resumed){
+        resumed=false;
+
+        //QUEST ONLY
+        if(!IsInvoking(nameof(CompleteRewardedVideoQuest))){
+          Invoke(nameof(CompleteRewardedVideoQuest), 6f);
+        }
+      }
+
       firstSecondOfFall=true;
 
       unityInterst = GetComponent<InterstitialVideo>();
@@ -86,6 +97,12 @@ public class Triggers : RewardedVideo
       LoadAd();
 
     }
+
+    void CompleteRewardedVideoQuest(){
+      quests.CompleteQuest("reward_ads");
+    }
+
+
 bool firstSecondOfFall=true;
 bool showedNewRecord=false;
 
@@ -164,6 +181,8 @@ bool showedNewRecord=false;
     }
 
 
+private int coinsInSingleRun=0, xInSingleRun=0;
+
 
 public GameObject x2Img;
 public Text x2Text;
@@ -177,6 +196,19 @@ public ParticleSystem redGetItemEffect;
         other.gameObject.GetComponent<MeshRenderer>().enabled=false;
         Invoke("cleanCoin",1);
         redGetItemEffect.Play();
+
+        //QUESTS ONLY
+        coinsInSingleRun += 5*x2;
+        if(coinsInSingleRun==100){
+          quests.CompleteQuest("collect_coins_100");
+          Debug.Log("collect_coins_100 is completed: "+coinsInSingleRun.ToString());
+        }
+
+        if(coinsInSingleRun==200){
+          quests.CompleteQuest("collect_coins_200");
+
+          Debug.Log("collect_coins_200 is completed: "+coinsInSingleRun.ToString());
+        }
       }
 
       if(other.gameObject.tag=="x2"){
@@ -189,6 +221,24 @@ public ParticleSystem redGetItemEffect;
         other.gameObject.transform.GetChild(0).gameObject.SetActive(false);
         Invoke("cleanx2",10);
         lightGetOtemEffect.Play();
+
+        //QUESTS ONLY
+        quests.CompleteQuest("boost_x2");
+
+        if(x2==4){
+          quests.CompleteQuest("boost_x4");
+        }
+        if(x2==8){
+          quests.CompleteQuest("boost_x8");
+        }
+
+        xInSingleRun++;
+        if(xInSingleRun==5){
+          quests.CompleteQuest("boost_use_5");
+        }
+        if(xInSingleRun==10){
+          quests.CompleteQuest("boost_use_10");
+        }
       }
     }
 
@@ -212,7 +262,7 @@ public ParticleSystem redGetItemEffect;
           score=0;
           Time.timeScale=0;
 
-          if(addCnt%3==0){
+          if(addCnt%2==1){
             if(!showIntersitionalAd()){
               //if(Advertisement.IsReady())
               //Advertisement.Show("Android_Interstitial");
@@ -463,13 +513,13 @@ public ParticleSystem redGetItemEffect;
       // Raised when the ad is estimated to have earned money.
       ad.OnAdPaid += (AdValue adValue) =>
       {
-          Time.timeScale=1;
-         resumed=true;
-         score=MovePlayer.cnt;
+        //   Time.timeScale=1;
+        //  resumed=true;
+        //  score=MovePlayer.cnt;
          
-         loadingPanel.SetActive(true);
+        //  loadingPanel.SetActive(true);
 
-         Application.LoadLevelAsync(Application.loadedLevel);
+        //  Application.LoadLevelAsync(Application.loadedLevel);
 
       };
       // Raised when an impression is recorded for an ad.

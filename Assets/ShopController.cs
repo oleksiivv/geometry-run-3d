@@ -22,12 +22,129 @@ public class ShopController : MonoBehaviour
         //PlayerPrefs.SetInt("fast", 0);
 
         //PlayerPrefs.SetInt("money", 10000);
+
+        UpdateShopState();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        coins.GetComponent<Text>().text = PlayerPrefs.GetInt("money").ToString();
+      //UpdateShopState();
+    }
+
+    public void buy1(int price)
+    {
+        if (price <= PlayerPrefs.GetInt("money"))
+        {
+            PlayerPrefs.SetInt("cube1", 1);
+            PlayerPrefs.SetInt("current", 1);
+            if(PlayerPrefs.GetInt("muted")==0)gameObject.GetComponent<AudioSource>().Play();
+            PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money")-price);
+        }
+
+        UpdateShopState();
+    }
+
+    public void buy2(int price)
+    {
+      if (price <= PlayerPrefs.GetInt("money"))
+      {
+          PlayerPrefs.SetInt("cube2", 1);
+          PlayerPrefs.SetInt("current", 2);
+          if(PlayerPrefs.GetInt("muted")==0)gameObject.GetComponent<AudioSource>().Play();
+          PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money")-price);
+      }
+
+      UpdateShopState();
+    }
+
+    public void buy3(int price)
+    {
+      if (price <= PlayerPrefs.GetInt("money"))
+      {
+          PlayerPrefs.SetInt("cube3", 1);
+          PlayerPrefs.SetInt("current", 3);
+          if(PlayerPrefs.GetInt("muted")==0)gameObject.GetComponent<AudioSource>().Play();
+          PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money")-price);
+      }
+
+      UpdateShopState();
+    }
+
+    public void buy4(int price)
+    {
+      if (price <= PlayerPrefs.GetInt("money"))
+      {
+          PlayerPrefs.SetInt("cube4", 1);
+          PlayerPrefs.SetInt("current", 4);
+          if(PlayerPrefs.GetInt("muted")==0)gameObject.GetComponent<AudioSource>().Play();
+          PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money")-price);
+      }
+
+      UpdateShopState();
+    }
+
+    public void buy5(int price)
+    {
+      if (price <= PlayerPrefs.GetInt("money"))
+      {
+          PlayerPrefs.SetInt("cube5", 1);
+          PlayerPrefs.SetInt("current", 5);
+          if(PlayerPrefs.GetInt("muted")==0)gameObject.GetComponent<AudioSource>().Play();
+          PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money")-price);
+      }
+
+      UpdateShopState();
+    }
+
+    //
+
+    public void openScene(int id){
+      loadingPanel.SetActive(true);
+      Application.LoadLevelAsync(id);
+    }
+
+
+
+    public void choose1()
+    {
+        if(PlayerPrefs.GetInt("cube1")==1)PlayerPrefs.SetInt("current", 1);
+        UpdateShopState();
+    }
+    public void choose2()
+    {
+        if (PlayerPrefs.GetInt("cube2") == 1) PlayerPrefs.SetInt("current", 2);
+        UpdateShopState();
+    }
+    public void choose3()
+    {
+        if (PlayerPrefs.GetInt("cube3") == 1) PlayerPrefs.SetInt("current", 3);
+        UpdateShopState();
+    }
+    public void choose4()
+    {
+        if (PlayerPrefs.GetInt("cube4") == 1) PlayerPrefs.SetInt("current", 4);
+        UpdateShopState();
+    }
+
+    public void choose5()
+    {
+        if (PlayerPrefs.GetInt("cube5") == 1) PlayerPrefs.SetInt("current", 5);
+        UpdateShopState();
+    }
+
+    public void choose0()
+    {
+        PlayerPrefs.SetInt("current", 0);
+        UpdateShopState();
+    }
+
+    public QuestsController quests;
+    private int numberOfAvailableSkins=1;
+
+    private void UpdateShopState(){
+      numberOfAvailableSkins=1;
+
+      coins.GetComponent<Text>().text = PlayerPrefs.GetInt("money").ToString();
 
         for(int i=1;i<cubes.Length;i++){
           if(PlayerPrefs.GetInt("cube"+i.ToString())==1){
@@ -35,6 +152,8 @@ public class ShopController : MonoBehaviour
             prices[i].SetActive(false);
             clickToBuyText[i].SetActive(true);
             cubes[i].GetComponent<Image>().color=new Color32(0,27,255,255);
+
+            numberOfAvailableSkins++;
 
           }
           else{
@@ -76,105 +195,11 @@ public class ShopController : MonoBehaviour
           arrows[0].SetActive(false);
         }
 
-
-
-
-
-
-
-
-
-    }
-
-    public void buy1(int price)
-    {
-        if (price <= PlayerPrefs.GetInt("money"))
-        {
-            PlayerPrefs.SetInt("cube1", 1);
-            PlayerPrefs.SetInt("current", 1);
-            if(PlayerPrefs.GetInt("muted")==0)gameObject.GetComponent<AudioSource>().Play();
-            PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money")-price);
-
+        if(numberOfAvailableSkins >= cubes.Length){
+          quests.CompleteQuest("buy_all_skins", true);
+          Debug.Log("buy_all_quests is completed");
         }
-    }
-    public void buy2(int price)
-    {
-      if (price <= PlayerPrefs.GetInt("money"))
-      {
-          PlayerPrefs.SetInt("cube2", 1);
-          PlayerPrefs.SetInt("current", 2);
-          if(PlayerPrefs.GetInt("muted")==0)gameObject.GetComponent<AudioSource>().Play();
-          PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money")-price);
 
-      }
-    }
-    public void buy3(int price)
-    {
-      if (price <= PlayerPrefs.GetInt("money"))
-      {
-          PlayerPrefs.SetInt("cube3", 1);
-          PlayerPrefs.SetInt("current", 3);
-          if(PlayerPrefs.GetInt("muted")==0)gameObject.GetComponent<AudioSource>().Play();
-          PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money")-price);
-      }
-    }
-    public void buy4(int price)
-    {
-      if (price <= PlayerPrefs.GetInt("money"))
-      {
-          PlayerPrefs.SetInt("cube4", 1);
-          PlayerPrefs.SetInt("current", 4);
-          if(PlayerPrefs.GetInt("muted")==0)gameObject.GetComponent<AudioSource>().Play();
-          PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money")-price);
-
-      }
-    }
-
-    public void buy5(int price)
-    {
-      if (price <= PlayerPrefs.GetInt("money"))
-      {
-          PlayerPrefs.SetInt("cube5", 1);
-          PlayerPrefs.SetInt("current", 5);
-          if(PlayerPrefs.GetInt("muted")==0)gameObject.GetComponent<AudioSource>().Play();
-          PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money")-price);
-
-      }
-    }
-
-    //
-
-    public void openScene(int id){
-      loadingPanel.SetActive(true);
-      Application.LoadLevelAsync(id);
-    }
-
-
-
-    public void choose1()
-    {
-        if(PlayerPrefs.GetInt("cube1")==1)PlayerPrefs.SetInt("current", 1);
-    }
-    public void choose2()
-    {
-        if (PlayerPrefs.GetInt("cube2") == 1) PlayerPrefs.SetInt("current", 2);
-    }
-    public void choose3()
-    {
-        if (PlayerPrefs.GetInt("cube3") == 1) PlayerPrefs.SetInt("current", 3);
-    }
-    public void choose4()
-    {
-        if (PlayerPrefs.GetInt("cube4") == 1) PlayerPrefs.SetInt("current", 4);
-    }
-
-    public void choose5()
-    {
-        if (PlayerPrefs.GetInt("cube5") == 1) PlayerPrefs.SetInt("current", 5);
-    }
-
-    public void choose0()
-    {
-        PlayerPrefs.SetInt("current", 0);
+        Debug.Log("number of av skins: "+ numberOfAvailableSkins.ToString());
     }
 }

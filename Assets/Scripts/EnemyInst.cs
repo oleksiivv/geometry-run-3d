@@ -19,7 +19,9 @@ public class EnemyInst : MonoBehaviour
     public float max=3.2f;
 
     public float minCoin,maxCoin,midCoin;
-    // Start is called before the first frame update
+
+    public QuestsController quests;
+    
     void Start()
     {
       if(enemies.Length>0){
@@ -72,6 +74,8 @@ public class EnemyInst : MonoBehaviour
 
     float pauseTime=0.7f;
 
+    private int bigEnemies=0, smallEnemies=0;
+
     IEnumerator enemyInst(){
       while(true){
         int id=Random.Range(0,Random.Range(0,enemies.Length)+1);
@@ -90,7 +94,23 @@ public class EnemyInst : MonoBehaviour
           break;
         }
         if(enemies.Length>1){
-          if(id==0 || id==1)Instantiate(enemies[id],new Vector3(posX,enemies[id].transform.position.y,instPos),Quaternion.identity);
+          if(id==0 || id==1){
+            Instantiate(enemies[id],new Vector3(posX,enemies[id].transform.position.y,instPos),Quaternion.identity);
+
+            //QUESTS ONLY
+            smallEnemies++;
+            if(smallEnemies==30){
+              quests.CompleteQuest("avoid_30_small_enemies");
+            }
+            
+            if(smallEnemies==50){
+              quests.CompleteQuest("avoid_50_small_enemies");
+            }
+
+            if(smallEnemies==100){
+              quests.CompleteQuest("avoid_100_small_enemies");
+            }
+          }
           else {
 
             int obj = Random.Range(0,3);
@@ -99,12 +119,47 @@ public class EnemyInst : MonoBehaviour
               int id2=Random.Range(0,additionalEnemies.Length);
               Instantiate(additionalEnemies[id2],new Vector3(additionalEnemies[id2].transform.position.x,additionalEnemies[id2].transform.position.y,instPos-12),
                       additionalEnemies[id2].transform.rotation);
+
+              //QUESTS ONLY
+              bigEnemies++;
+              if(bigEnemies==10){
+                quests.CompleteQuest("avoid_10_big_enemies");
+              }
+              if(bigEnemies==20){
+                quests.CompleteQuest("avoid_20_big_enemies");
+              }
+              if(bigEnemies==30){
+                quests.CompleteQuest("avoid_30_big_enemies");
+              }
             }
             else {
               Instantiate(enemies[id],new Vector3(enemies[id].transform.position.x,enemies[id].transform.position.y,instPos),enemies[id].transform.rotation);
-          
+
+              //QUESTS ONLY
+              smallEnemies++;
+              if(smallEnemies==30){
+                quests.CompleteQuest("avoid_30_small_enemies");
+              }
+              
+              if(smallEnemies==50){
+                quests.CompleteQuest("avoid_50_small_enemies");
+              }
+
+              if(smallEnemies==100){
+                quests.CompleteQuest("avoid_100_small_enemies");
+              }
             }
           }
+
+          //QUESTS ONLY
+          if(bigEnemies+smallEnemies>=150){
+              quests.CompleteQuest("avoid_150_enemies");
+          }
+              
+          if(bigEnemies+smallEnemies>=200){
+            quests.CompleteQuest("avoid_200_enemies");
+          }
+          
             //if(pauseTime>0.1f)pauseTime-=0.01f;
           yield return new WaitForSeconds(pauseTime);
         }
