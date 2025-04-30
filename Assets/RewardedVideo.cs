@@ -7,9 +7,9 @@ using UnityEngine.Advertisements;
 public class RewardedVideo : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowListener
 {
 //    [SerializeField] Button _showAdButton;
-    [SerializeField] string _androidAdUnitId = "Android_Rewarded";
-    [SerializeField] string _iOSAdUnitId = "iOS_Rewarded";
-    protected string _adUnitId = null; // This will remain null for unsupported platforms
+    private string _androidAdUnitId = "Android_Rewarded";
+    private string _iOSAdUnitId = "iOS_Rewarded";
+    protected string _adUnitId = "iOS_Rewarded"; // This will remain null for unsupported platforms
  
     void Awake()
     {   

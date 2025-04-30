@@ -25,7 +25,7 @@ public class QuestSlot : MonoBehaviour
 
         icon.sprite = quest.icon;
         name.text = quest.name;
-        description.text = quest.description;
+        description.text = "<b>New quest: </b>" + quest.description;
     }
 
     public void Hide(){

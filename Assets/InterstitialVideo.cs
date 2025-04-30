@@ -6,9 +6,9 @@ using UnityEngine.Advertisements;
 
 public class InterstitialVideo : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowListener
 {
-    [SerializeField] string _androidAdUnitId = "Android_Interstitial";
-    [SerializeField] string _iOsAdUnitId = "iOS_Interstitial";
-    string _adUnitId;
+    private string _androidAdUnitId = "Android_Interstitial";
+    private string _iOsAdUnitId = "iOS_Interstitial";
+    string _adUnitId = "iOS_Interstitial";
  
     void Awake()
     {

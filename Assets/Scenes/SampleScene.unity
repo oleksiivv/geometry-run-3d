@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.35568783, g: 0.35026237, b: 0.3740345, a: 1}
+  m_IndirectSpecularColor: {r: 0.3553455, g: 0.35005593, b: 0.3732202, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -20584,27 +20584,27 @@ PrefabInstance:
     - target: {fileID: 8681619513175429776, guid: 956dd366aa3eb454b8994c0042d40b10,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8681619513175429776, guid: 956dd366aa3eb454b8994c0042d40b10,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8681619513175429776, guid: 956dd366aa3eb454b8994c0042d40b10,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8681619513175429776, guid: 956dd366aa3eb454b8994c0042d40b10,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8681619513175429776, guid: 956dd366aa3eb454b8994c0042d40b10,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 478.757
+      value: 478.75696
       objectReference: {fileID: 0}
     - target: {fileID: 8681619513175429776, guid: 956dd366aa3eb454b8994c0042d40b10,
         type: 3}
@@ -20649,12 +20649,12 @@ PrefabInstance:
     - target: {fileID: 8681619513175429776, guid: 956dd366aa3eb454b8994c0042d40b10,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 455.6788
+      value: -264.3212
       objectReference: {fileID: 0}
     - target: {fileID: 8681619513175429776, guid: 956dd366aa3eb454b8994c0042d40b10,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 713.2
+      value: -496
       objectReference: {fileID: 0}
     - target: {fileID: 8681619513175429776, guid: 956dd366aa3eb454b8994c0042d40b10,
         type: 3}
@@ -20675,6 +20675,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: QuestSlot
+      objectReference: {fileID: 0}
+    - target: {fileID: 8681619513175429777, guid: 956dd366aa3eb454b8994c0042d40b10,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 956dd366aa3eb454b8994c0042d40b10, type: 3}
@@ -20777,27 +20782,27 @@ PrefabInstance:
     - target: {fileID: 9037486796685239202, guid: 78e44256c79e1e642af4b2b3fc1bd121,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9037486796685239202, guid: 78e44256c79e1e642af4b2b3fc1bd121,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9037486796685239202, guid: 78e44256c79e1e642af4b2b3fc1bd121,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9037486796685239202, guid: 78e44256c79e1e642af4b2b3fc1bd121,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9037486796685239202, guid: 78e44256c79e1e642af4b2b3fc1bd121,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 478.757
+      value: 478.75696
       objectReference: {fileID: 0}
     - target: {fileID: 9037486796685239202, guid: 78e44256c79e1e642af4b2b3fc1bd121,
         type: 3}
@@ -20842,12 +20847,12 @@ PrefabInstance:
     - target: {fileID: 9037486796685239202, guid: 78e44256c79e1e642af4b2b3fc1bd121,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 455.6788
+      value: -264.3212
       objectReference: {fileID: 0}
     - target: {fileID: 9037486796685239202, guid: 78e44256c79e1e642af4b2b3fc1bd121,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 713.2
+      value: -496
       objectReference: {fileID: 0}
     - target: {fileID: 9037486796685239202, guid: 78e44256c79e1e642af4b2b3fc1bd121,
         type: 3}
@@ -20868,6 +20873,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: QuestCompletedAlert
+      objectReference: {fileID: 0}
+    - target: {fileID: 9037486796685239203, guid: 78e44256c79e1e642af4b2b3fc1bd121,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 78e44256c79e1e642af4b2b3fc1bd121, type: 3}
