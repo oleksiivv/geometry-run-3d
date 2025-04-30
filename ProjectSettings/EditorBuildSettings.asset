@@ -44,4 +44,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/mix.unity
     guid: a533c57a462dda747ac85ae080d4fd2a
+  - enabled: 1
+    path: Assets/Scenes/quests.unity
+    guid: 2c4aad524b5797346a29000238834d83
   m_configObjects: {}

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Advertisements;
 
 [RequireComponent(typeof(InterstitialVideo))]
-public class Menu : RewardedVideo
+public class Menu : RewardedVideo, IUnityAdsInitializationListener
 {
     public Text hiText,money;
     public GameObject loadingPanel,startQuestion;
@@ -42,7 +42,8 @@ public class Menu : RewardedVideo
     // Start is called before the first frame update
     void Start()
     {
-      Advertisement.Initialize(id,false);
+      Initialize();
+
       Time.timeScale=1;
       //hi="hi";
       if(remindCnt==2 && PlayerPrefs.GetInt("rated")==0){
@@ -238,6 +239,20 @@ public class Menu : RewardedVideo
     }
 
 
+    // Called from outside this class
+            public void Initialize()
+            {
+                   Advertisement.Initialize(id, false, this);
+            }
 
+            public void OnInitializationComplete()
+             {
+                   // Do something
+             }
+
+             public void OnInitializationFailed(UnityAdsInitializationError error, string message)
+             {
+                  // Do Something
+             }
     
 }

@@ -7,7 +7,7 @@ using GoogleMobileAds.Api;
 using System;
 
 [RequireComponent(typeof(InterstitialVideo))]
-public class Triggers : RewardedVideo
+public class Triggers : RewardedVideo, IUnityAdsInitializationListener
 {
 
     public GameObject pausePanel,restartPanel,bg,loadingPanel,resumePanel;
@@ -70,7 +70,8 @@ public class Triggers : RewardedVideo
 
 
       x2=1;
-      Advertisement.Initialize(id,false);
+
+      Initialize();
 
       Time.timeScale=1;
       bg.SetActive(!true);
@@ -382,6 +383,9 @@ public ParticleSystem redGetItemEffect;
                 //Debug.Log("Interstitial ad loaded with response : " + ad.GetResponseInfo());
 
                 _interstitialAd = ad;
+
+                RegisterEventHandlersInt(_interstitialAd);
+                RegisterReloadHandlerInt(_interstitialAd);
             });
     }
 
@@ -570,4 +574,78 @@ public ParticleSystem redGetItemEffect;
           InitAdmobRewarded();
       };
   }
+
+  private void RegisterEventHandlersInt(InterstitialAd interstitialAd)
+      {
+          // Raised when the ad is estimated to have earned money.
+          interstitialAd.OnAdPaid += (AdValue adValue) =>
+          {
+              Debug.Log(String.Format("Interstitial ad paid {0} {1}.",
+                  adValue.Value,
+                  adValue.CurrencyCode));
+          };
+          // Raised when an impression is recorded for an ad.
+          interstitialAd.OnAdImpressionRecorded += () =>
+          {
+              Debug.Log("Interstitial ad recorded an impression.");
+          };
+          // Raised when a click is recorded for an ad.
+          interstitialAd.OnAdClicked += () =>
+          {
+              Debug.Log("Interstitial ad was clicked.");
+          };
+          // Raised when an ad opened full screen content.
+          interstitialAd.OnAdFullScreenContentOpened += () =>
+          {
+              Debug.Log("Interstitial ad full screen content opened.");
+          };
+          // Raised when the ad closed full screen content.
+          interstitialAd.OnAdFullScreenContentClosed += () =>
+          {
+              Debug.Log("Interstitial ad full screen content closed.");
+          };
+          // Raised when the ad failed to open full screen content.
+          interstitialAd.OnAdFullScreenContentFailed += (AdError error) =>
+          {
+              Debug.LogError("Interstitial ad failed to open full screen content " +
+                          "with error : " + error);
+          };
+      }
+
+      private void RegisterReloadHandlerInt(InterstitialAd interstitialAd)
+      {
+          // Raised when the ad closed full screen content.
+          interstitialAd.OnAdFullScreenContentClosed += () =>
+          {
+              Debug.Log("Interstitial Ad full screen content closed.");
+
+              // Reload the ad so that we can show another as soon as possible.
+              LoadLoadInterstitialAd();
+          };
+          // Raised when the ad failed to open full screen content.
+          interstitialAd.OnAdFullScreenContentFailed += (AdError error) =>
+          {
+              Debug.LogError("Interstitial ad failed to open full screen content " +
+                          "with error : " + error);
+
+              // Reload the ad so that we can show another as soon as possible.
+              LoadLoadInterstitialAd();
+          };
+      }
+
+      // Called from outside this class
+            public void Initialize()
+            {
+                   Advertisement.Initialize(id, false, this);
+            }
+
+            public void OnInitializationComplete()
+             {
+                   // Do something
+             }
+
+             public void OnInitializationFailed(UnityAdsInitializationError error, string message)
+             {
+                  // Do Something
+             }
 }
